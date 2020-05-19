@@ -39,6 +39,8 @@ rpc SayHello(HelloRequest) returns (HelloResponse){}
 
 
 使用场景：普通的远程调用，像http一样，即请求-响应。实现内容可见以下内容
+
+[grpc for java - 普通rpc 实践](https://github.com/qianxunke/cloud-grpc-learn/blob/master/cloud-grpc-java/REAME-standard.md)
 ## 服务端流式 RPC
 即客户端发送一个请求给服务端，可获取一个数据流用来读取一系列消息。客户端从返回的数据流里一直读取直到没有更多消息为止。
 ```
