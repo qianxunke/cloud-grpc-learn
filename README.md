@@ -64,3 +64,5 @@ rpc BidiHello(stream HelloRequest) returns (stream HelloResponse){}
 
 
 使用场景：一次请求，建立连接后，客户端与服务端可向对方发送消息，比如机器人聊天程序，以下是实现一个极其简易的聊天室。
+
+[grpc for java - 双向流式实践](https://github.com/qianxunke/cloud-grpc-learn/blob/master/cloud-grpc-java/REAME.md)
