@@ -1,0 +1,23 @@
+syntax = "proto3";
+
+option go_package = "pbfs/hello";
+option java_multiple_files = true;
+option java_package = "com.cloud.grpc.hello";
+option java_outer_classname = "HelloProto";
+option objc_class_prefix = "HL";
+
+package hello;
+
+service Hello {
+  rpc SayHello (HelloRequest) returns (HelloResponse) {}
+}
+
+// The request message containing the user's name.
+message HelloRequest {
+  string name = 1;
+}
+
+// The response message containing the greetings
+message HelloResponse {
+  string message = 1;
+}

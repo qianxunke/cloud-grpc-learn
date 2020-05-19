@@ -1,0 +1,86 @@
+apply plugin: 'com.android.application'
+
+apply plugin: 'com.google.protobuf'  //这里必须添加
+
+android {
+    compileSdkVersion 29
+    buildToolsVersion "29.0.3"
+
+    defaultConfig {
+        applicationId "com.cloud.grpc.android"
+        minSdkVersion 16
+        targetSdkVersion 29
+        versionCode 1
+        versionName "1.0"
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    lintOptions {
+        disable 'GoogleAppIndexingWarning', 'HardcodedText', 'InvalidPackage'
+        textReport true
+        textOutput "stdout"
+    }
+
+    sourceSets {
+        main {
+            proto {
+                srcDir '../../cloud-grpc-protos'  //这里是proto文件路径
+            }
+        }
+    }
+
+}
+
+protobuf {
+    protoc { artifact = 'com.google.protobuf:protoc:3.11.0' }
+    plugins {
+        grpc { artifact = 'io.grpc:protoc-gen-grpc-java:1.29.0' // CURRENT_GRPC_VERSION
+        }
+    }
+    generateProtoTasks {
+        all().each { task ->
+            task.builtins {
+                  java { option 'lite' }  //删除旧 proro
+               // remove java
+               // remove(java)
+            }
+            task.builtins {
+                //生成java代码
+                // Add cpp output without any option.
+                // DO NOT omit the braces if you want this builtin to be added.
+                //  cpp {}
+                java {}
+            }
+            task.plugins {
+                grpc { // Options added to --grpc_out
+                    option 'lite' }
+            }
+        }
+    }
+    generatedFilesBaseDir = "$projectDir/src/generated"
+}
+
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+
+    implementation 'androidx.appcompat:appcompat:1.1.0'
+    implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
+    testImplementation 'junit:junit:4.12'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.1'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
+
+    // You need to build grpc-java to obtain these libraries below.
+    implementation 'io.grpc:grpc-okhttp:1.29.0' // CURRENT_GRPC_VERSION
+    implementation 'io.grpc:grpc-protobuf-lite:1.29.0' // CURRENT_GRPC_VERSION
+    implementation 'io.grpc:grpc-stub:1.29.0' // CURRENT_GRPC_VERSION
+    implementation 'javax.annotation:javax.annotation-api:1.2'
+}

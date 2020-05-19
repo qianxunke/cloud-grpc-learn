@@ -1,0 +1,22 @@
+syntax = "proto3";
+
+option go_package = "pbfs/double_way_stream";
+option java_multiple_files = true;
+option java_package = "com.cloud.grpc.doubleWayStream";
+option java_outer_classname = "DoubleWayStreamProto";
+option objc_class_prefix = "DWS";
+
+package double_way_stream;
+
+//双向流式
+service DoubleWayStreamService{
+  rpc DoubleWayStreamFun(stream RequestMessage) returns (stream ResponseMessage){}
+}
+
+message RequestMessage{
+  string req_msg = 1;
+}
+
+message ResponseMessage{
+  string rsp_msg = 1;
+}
